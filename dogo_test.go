@@ -1,6 +1,7 @@
 package dogo_test
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 	"testing"
@@ -28,4 +29,18 @@ func ExampleDo() {
 
 	fmt.Println(v, err)
 	// Output: 3 <nil>
+}
+
+func ExampleDo_multiplevalues() {
+	buf := bytes.NewBufferString("abc")
+	v, err := dogo.Do(func() rune {
+		r, s, err := buf.ReadRune()
+		dogo.Check(err)
+		fmt.Println(s)
+		return r
+	})
+	fmt.Println(v, err)
+	// Output:
+	// 1
+	// 97 <nil>
 }
